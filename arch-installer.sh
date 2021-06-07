@@ -121,11 +121,12 @@ do
 	read -r -n1 i3
 done
 
-pkgs="base-devel dialog dosfstools firefox git grub gtop linux-headers mtools ncmpcpp neofetch net-tools 
-netcat networkmanager mpd reflector terminator ttf-roboto-mono unzip wget wpa_supplicant zsh"
+pkgs="base-devel dialog discord dosfstools firefox git grub gtop linux-headers mtools ncmpcpp neofetch 
+net-tools netcat networkmanager mpd ranger reflector terminator unzip wget wpa_supplicant zsh"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
-	pkgs+=' compton dunst i3-gaps i3blocks i3status lxappearance nitrogen pavucontrol-qt rofi scrot xorg xorg-xinit'
+	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
+	lxappearance nitrogen pavucontrol-qt polybar pulseaudio rofi scrot xorg"
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
@@ -134,16 +135,6 @@ pacman -Syyyu --noconfirm \$pkgs
 printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}blvckmetxl\\n"
 useradd -mG wheel,audio,video blvckmetxl -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
-curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O
-sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
-chmod +x install.sh
-sudo -u blvckmetxl ./install.sh
-rm install.sh
-if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
-then
-	echo "startx" > /home/blvckmetxl/.zlogin; chown blvckmetxl:blvckmetxl /home/blvckmetxl/.zlogin
-	echo "exec i3" > /home/blvckmetxl/.xinitrc; chown blvckmetxl:blvckmetxl /home/blvckmetxl/.xinitrc
-fi
 
 test=0
 while [ -z "\$pwd" ]
@@ -162,14 +153,26 @@ do
 		pwd=
 	fi
 done
+curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O
+sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
+chmod +x install.sh
+sudo -u blvckmetxl ./install.sh
+rm install.sh
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
 grub-mkconfig -o /boot/grub/grub.cfg
 
-printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] enabling NetworkManager\${NC}\\n"
+if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
+then
+	printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] enabling \${CYAN}LightDM\${NC}\\n"
+	systemctl enable lightdm
+fi
+
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] enabling \${CYAN}NetworkManager\${NC}\\n"
 systemctl enable NetworkManager
 
+sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # or else pulseaudio doesn't start
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] exiting."
 exit
 EOF
