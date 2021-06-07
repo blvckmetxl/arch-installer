@@ -44,7 +44,7 @@ format() {
 	swapon $disk$swap
 }
 
-printf "${BLUE}[${WHITE}+${BLUE}] setting the keyboard layout to ${GREEN}br-abnt2...\n\n"
+printf "${BLUE}[${WHITE}+${BLUE}] setting the keyboard layout to ${GREEN}br-abnt2${BLUE}...\n\n"
 loadkeys br-abnt2
 
 printf "${BLUE}[${WHITE}..${BLUE}] generating mirrorlist...\n"
@@ -101,20 +101,35 @@ timedatectl set-ntp true
 sed -i 's/#en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
-echo "KEYMAP=br-abnt2" > /etc/vconsole.conf
 
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] setting hostname and configuring \${GREEN}/etc/hosts"
 echo "arch" > /etc/hostname
+echo "KEYMAP=br-abnt2" > /etc/vconsole.conf
 echo "127.0.0.1			localhost arch" >> /etc/hosts
 echo "::1			localhost" >> /etc/hosts
+
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] configuring \${GREEN}/etc/pacman.conf"
+sed -i 's/#Color/Color/g' /etc/pacman.conf
+sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${PURPLE}BlackArch\${BLUE} repos\${NC}\\n"
 curl https://blackarch.org/strap.sh | sh
 
-printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] install some more packages\${NC}\\n"
-sed -i 's/#Color/Color/g' /etc/pacman.conf
-sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
-pacman -Syyyu --noconfirm base-devel dialog dosfstools firefox git grub linux-headers mtools net-tools netcat networkmanager reflector terminator ttf-roboto-mono unzip wget wpa_supplicant zsh
+while ! [ "\$i3" = 'y' -o "\$i3" = 'Y' -o "\$i3" = 'n' -o "\$i3" = 'N' ]
+do
+	printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] install \${CYAN}i3\${BLUE}?\${GREEN} (y/n)\${BLUE} <--\${WHITE} "
+	read -r -n1 i3
+done
+
+pkgs="base-devel dialog dosfstools firefox git grub gtop linux-headers mtools ncmpcpp neofetch net-tools 
+netcat networkmanager mpd reflector terminator ttf-roboto-mono unzip wget wpa_supplicant zsh"
+if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
+then
+	pkgs+=' compton dunst i3-gaps i3blocks i3status lxappearance nitrogen pavucontrol-qt rofi scrot xorg xorg-xinit'
+fi
+
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
+pacman -Syyyu --noconfirm \$pkgs
 
 printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}blvckmetxl\\n"
 useradd -mG wheel,audio,video blvckmetxl -s /usr/bin/zsh
@@ -124,6 +139,11 @@ sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
 chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
+if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
+then
+	echo "startx" > /home/blvckmetxl/.zlogin; chown blvckmetxl:blvckmetxl /home/blvckmetxl/.zlogin
+	echo "exec i3" > /home/blvckmetxl/.xinitrc; chown blvckmetxl:blvckmetxl /home/blvckmetxl/.xinitrc
+fi
 
 test=0
 while [ -z "\$pwd" ]
@@ -160,7 +180,7 @@ cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 arch-chroot /mnt ./arch-installer2.sh
 
 rm /mnt/arch-installer2.sh
-printf "\n\n${BLUE}[${WHITE}+${BLUE}]${CYAN} reboot? ${GREEN}(y/n) ${CYAN}<-- "
+printf "\n\n${BLUE}[${WHITE}+${BLUE}] system successfully installed. reboot? ${GREEN}(y/n) ${BLUE}<--${WHITE} "
 while ! [ "$rb" = 'y' -o "$rb" = 'Y' -o "$rb" = 'n' -o "$rb" = 'N' ]
 do
 	read -r -n1 rb
