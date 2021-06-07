@@ -121,12 +121,12 @@ do
 	read -r -n1 i3
 done
 
-pkgs="base-devel dialog discord dosfstools firefox git grub gtop linux-headers mtools ncmpcpp neofetch 
-net-tools netcat networkmanager mpd ranger reflector terminator unzip wget wpa_supplicant zsh"
+pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop linux-headers mtools ncmpcpp 
+neofetch net-tools netcat networkmanager mpd ranger reflector unzip wget wpa_supplicant zsh"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
 	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
-	lxappearance nitrogen pavucontrol-qt polybar pulseaudio rofi scrot xorg"
+	lxappearance nitrogen pavucontrol-qt pulseaudio rofi scrot xorg"
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
