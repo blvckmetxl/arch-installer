@@ -114,11 +114,16 @@ curl https://blackarch.org/strap.sh | sh
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] install some more packages\${NC}\\n"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
-pacman -Syyyu --noconfirm base-devel dialog dosfstools firefox git grub linux-headers mtools net-tools netcat networkmanager reflector terminator unzip wget wpa_supplicant zsh
+pacman -Syyyu --noconfirm base-devel dialog dosfstools firefox git grub linux-headers mtools net-tools netcat networkmanager reflector terminator ttf-roboto-mono unzip wget wpa_supplicant zsh
 
-printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] adding user \${CYAN}blvckmetxl\\n"
+printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}blvckmetxl\\n"
 useradd -mG wheel,audio,video blvckmetxl -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
+curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O
+sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
+chmod +x install.sh
+sudo -u blvckmetxl ./install.sh
+rm install.sh
 
 test=0
 while [ -z "\$pwd" ]
