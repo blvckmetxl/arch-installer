@@ -135,6 +135,8 @@ pacman -Syyyu --noconfirm \$pkgs
 printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}blvckmetxl\\n"
 useradd -mG wheel,audio,video blvckmetxl -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
+echo "setxkbmap br" > /home/blvckmetxl/.profile
+chown blvckmetxl:blvckmetxl /home/blvckmetxl/.profile
 
 test=0
 while [ -z "\$pwd" ]
