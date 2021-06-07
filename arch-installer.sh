@@ -54,7 +54,7 @@ reflector -c Brazil -a 12 --sort rate --save /etc/pacman.d/mirrorlist >& /dev/nu
 while ! [ "$opt" = 'y' -o "$opt" = 'Y' -o "$opt" = 'n' -o "$opt" = 'N' ]
 do
 	printf "\n${BLUE}[${WHITE}?${BLUE}] is the disk pre-partitioned? ${GREEN}(y/n) ${CYAN}<-- "
-	read -r n1 opt
+	read -r -n1 opt
 done
 
 if [[ "$opt" == 'y' ]] || [[ "$opt" == 'Y' ]]
