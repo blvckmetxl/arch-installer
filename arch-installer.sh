@@ -110,6 +110,7 @@ echo "::1			localhost" >> /etc/hosts
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] configuring \${GREEN}/etc/pacman.conf"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
+sed -i 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
 sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${PURPLE}BlackArch\${BLUE} repos\${NC}\\n"
@@ -121,8 +122,8 @@ do
 	read -r -n1 i3
 done
 
-pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop linux-headers mtools ncmpcpp 
-neofetch net-tools netcat networkmanager mpd ranger reflector unzip wget wpa_supplicant zsh"
+pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop linux-headers mtools ncmpcpp zsh 
+neofetch net-tools netcat networkmanager mpd ranger reflector ttf-ubuntu-font-family unzip wget wpa_supplicant"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
 	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
