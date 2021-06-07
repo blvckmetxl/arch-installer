@@ -33,14 +33,13 @@ ${WHITE}
 "
 
 format() {
-	printf "\n"
-	printf "\n${BLUE}[${WHITE}?${BLUE}] ext4 partition:${WHITE} $disk"
+	printf "\n${BLUE}[${WHITE}..${BLUE}] ext4 partition:${WHITE} $disk"
 	read -r -n1 ext4
-	printf "\n${BLUE}[${WHITE}?${BLUE}] swap partition:${WHITE} $disk"
+	printf "\n${BLUE}[${WHITE}..${BLUE}] swap partition:${WHITE} $disk"
 	read -r -n1 swap
 	
-	printf "\n${CYAN}"
-	mkfs.ext4 $disk$ext4
+	printf "\n\n${NC}"
+	mkfs.ext4 -F $disk$ext4
 	mkswap $disk$swap
 	swapon $disk$swap
 }
@@ -48,12 +47,12 @@ format() {
 printf "${BLUE}[${WHITE}+${BLUE}] setting the keyboard layout to ${GREEN}br-abnt2...\n\n"
 loadkeys br-abnt2
 
-printf "${BLUE}[${WHITE}+${BLUE}] generating mirrorlist...\n"
+printf "${BLUE}[${WHITE}..${BLUE}] generating mirrorlist...\n"
 reflector -c Brazil -a 12 --sort rate --save /etc/pacman.d/mirrorlist >& /dev/null
 
 while ! [ "$opt" = 'y' -o "$opt" = 'Y' -o "$opt" = 'n' -o "$opt" = 'N' ]
 do
-	printf "\n${BLUE}[${WHITE}?${BLUE}] is the disk pre-partitioned? ${GREEN}(y/n) ${CYAN}<-- "
+	printf "\n${BLUE}[${WHITE}?${BLUE}] is the disk pre-partitioned? ${GREEN}(y/n) ${BLUE}<--${WHITE} "
 	read -r -n1 opt
 done
 
@@ -67,25 +66,34 @@ else
 	format
 fi
 
-printf "${BLUE}[${WHITE}+${BLUE}] mounting ${GREEN}$disk$ext4 ${BLUE}to /mnt\n\n"
+printf "\n${BLUE}[${WHITE}+${BLUE}] mounting ${GREEN}$disk$ext4 ${BLUE}to /mnt\n\n"
 mount $disk$ext4 /mnt
 
-printf "${BLUE}[${WHITE}+${BLUE}] starting base packages installation\n\n${CYAN}"
+printf "${BLUE}[${WHITE}..${BLUE}] starting base packages installation\n${NC}"
 pacstrap /mnt base linux linux-firmware vim intel-ucode xf86-video-intel
 
-printf "${BLUE}[${WHITE}+${BLUE}] generating ${GREEN}fstab\n\n"
+printf "\n${BLUE}[${WHITE}+${BLUE}] generating ${GREEN}fstab${NC}\n"
 genfstab -U /mnt >> /mnt/etc/fstab
 
-printf "${BLUE}[${WHITE}+${BLUE}] writing the other half of the script to /mnt\n\n"
+printf "\n${BLUE}[${WHITE}+${BLUE}] writing the other half of the script to /mnt\n\n"
 cat << EOF > /mnt/arch-installer2.sh
 #!/bin/bash
 
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
+PURPLE='\033[0;35m'
 WHITE='\033[0;37m'
+NC='\033[0m'
 
-printf "\${BLUE}[\${WHITE}+\${BLUE}] adjusting timezone and locale\${CYAN}"
+get_pwd() {
+	printf "\${BLUE}[\${WHITE}?\${BLUE}] password: "
+	read -s -r pwd
+	printf "\\n\${BLUE}[\${WHITE}?\${BLUE}] one more time: "
+	read -s -r pwd2
+}
+
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] adjusting timezone and locale\${NC}\\n"
 ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
 timedatectl set-ntp true
@@ -95,35 +103,59 @@ locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "KEYMAP=br-abnt2" > /etc/vconsole.conf
 
-printf "\${BLUE}[\${WHITE}+\${BLUE}] setting hostname and configuring \${GREEN}/etc/hosts"
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] setting hostname and configuring \${GREEN}/etc/hosts"
 echo "arch" > /etc/hostname
 echo "127.0.0.1			localhost arch" >> /etc/hosts
 echo "::1			localhost" >> /etc/hosts
 
-printf "\${BLUE}[\${WHITE}?\${BLUE}] adding user \${CYAN}blvckmetxl"
-printf "\${BLUE}[\${WHITE}?\${BLUE}] password:\${CYAN} "
-read -r pwd
-useradd -mG wheel,audio,video blvckmetxl
-echo "blvckmetxl:\$pwd" | chpasswd
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${PURPLE}BlackArch\${BLUE} repos\${NC}\\n"
+curl https://blackarch.org/strap.sh | sh
+
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] install some more packages\${NC}\\n"
+sed -i 's/#Color/Color/g' /etc/pacman.conf
+sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
+pacman -Syyyu --noconfirm base-devel dialog dosfstools firefox git grub linux-headers mtools net-tools netcat networkmanager reflector terminator unzip wget wpa_supplicant zsh
+
+printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] adding user \${CYAN}blvckmetxl\\n"
+useradd -mG wheel,audio,video blvckmetxl -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
 
-printf "\${BLUE}[\${WHITE}+\${BLUE}] install some more packages\${CYAN}"
-pacman -S base-devel dialog dosfstools git grub iwd linux-headers mtools net-tools networkmanager reflector terminator wireless_tools wget wpa_supplicant xorg zsh
+test=0
+while [ -z "\$pwd" ]
+do
+	if [ "\$test" -gt 0 ]
+	then
+		printf "\\n\\n\${BLUE}[\${WHITE}-\${BLUE}] try again.\\n"
+	fi
+	get_pwd
+	
+	if [ "\$pwd" == "\$pwd2" ]
+	then
+		echo "blvckmetxl:\$pwd" | chpasswd
+	else	
+		let "test+=1"
+		pwd=
+	fi
+done
 
-printf "\${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${CYAN}"
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
 grub-mkconfig -o /boot/grub/grub.cfg
 
-clear
-printf "\${BLUE}[\${WHITE}+\${BLUE}] \${CYAN}exiting."
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] enabling NetworkManager\${NC}\\n"
+systemctl enable NetworkManager
+
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] exiting."
 exit
 EOF
 chmod +x /mnt/arch-installer2.sh
 
-printf "${BLUE}[${WHITE}+${BLUE}] chrooting into the fresh ${CYAN}arch ${BLUE}installation\n\n"
+printf "${BLUE}[${WHITE}+${BLUE}] chrooting into the fresh ${CYAN}arch ${BLUE}installation${NC}\n"
+cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 arch-chroot /mnt ./arch-installer2.sh
 
-printf "${BLUE}[${WHITE}+${BLUE}]${CYAN} reboot? ${GREEN}(y/n) ${CYAN}<-- "
+rm /mnt/arch-installer2.sh
+printf "\n\n${BLUE}[${WHITE}+${BLUE}]${CYAN} reboot? ${GREEN}(y/n) ${CYAN}<-- "
 while ! [ "$rb" = 'y' -o "$rb" = 'Y' -o "$rb" = 'n' -o "$rb" = 'N' ]
 do
 	read -r -n1 rb
@@ -131,8 +163,9 @@ done
 
 if [[ "$rb" == 'y' ]] || [[ "$rb" == 'Y' ]]
 then
+	umount /mnt
 	reboot
 else
-	printf "\n${NC}"
+	printf "\n\n${NC}"
 	exit
 fi
