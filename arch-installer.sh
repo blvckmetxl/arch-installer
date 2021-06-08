@@ -113,6 +113,12 @@ sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
 sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}"
+cd /opt; git clone https://aur.archlinux.org/yay.git
+chown -R blvckmetxl:blvckmetxl /opt
+sudo -u blvckmetxl makepkg -si
+chown root:root /opt
+
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${PURPLE}BlackArch\${BLUE} repos\${NC}\\n"
 curl https://blackarch.org/strap.sh | sh
 
@@ -162,11 +168,6 @@ sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
 chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
-
-printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}\\n"
-cd /opt; git clone https://aur.archlinux.org/yay.git
-chown -R blvckmetxl:blvckmetxl /opt
-sudo -u blvckmetxl makepkg -si
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
