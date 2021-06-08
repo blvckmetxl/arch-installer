@@ -127,7 +127,8 @@ neofetch net-tools netcat networkmanager mpd ranger reflector ttf-ubuntu-font-fa
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
 	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
-	lxappearance nitrogen pavucontrol-qt pulseaudio rofi scrot xorg"
+	lxappearance nitrogen noto-fonts-cjk noto-fonts-emoji noto-fonts pavucontrol-qt pulseaudio rofi scrot 
+	ttf-ubuntu-font-family xorg"
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
