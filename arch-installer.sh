@@ -122,13 +122,13 @@ do
 	read -r -n1 i3
 done
 
-pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop linux-headers mtools ncmpcpp zsh 
-neofetch net-tools netcat networkmanager mpd ranger reflector ttf-ubuntu-font-family unzip wget wpa_supplicant 
+pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop inetutils linux-headers mtools ncmpcpp zsh 
+neofetch net-tools netcat networkmanager pkgfile mpd ranger reflector ttf-ubuntu-font-family unzip wget wpa_supplicant 
 noto-fonts-cjk noto-fonts-emoji noto-fonts"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
 	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
-	nitrogen pavucontrol-qt pulseaudio rofi scrot xorg"
+	lxappearance nitrogen pavucontrol-qt pulseaudio rofi scrot xorg"
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
@@ -162,6 +162,11 @@ sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
 chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
+
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}\\n"
+cd /opt; git clone https://aur.archlinux.org/yay.git
+chown -R blvckmetxl:blvckmetxl /opt
+sudo -u blvckmetxl makepkg -si
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
