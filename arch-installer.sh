@@ -123,12 +123,12 @@ do
 done
 
 pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop linux-headers mtools ncmpcpp zsh 
-neofetch net-tools netcat networkmanager mpd ranger reflector ttf-ubuntu-font-family unzip wget wpa_supplicant"
+neofetch net-tools netcat networkmanager mpd ranger reflector ttf-ubuntu-font-family unzip wget wpa_supplicant 
+noto-fonts-cjk noto-fonts-emoji noto-fonts"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
 	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
-	lxappearance nitrogen noto-fonts-cjk noto-fonts-emoji noto-fonts pavucontrol-qt pulseaudio rofi scrot 
-	ttf-ubuntu-font-family xorg"
+	nitrogen pavucontrol-qt pulseaudio rofi scrot xorg"
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
