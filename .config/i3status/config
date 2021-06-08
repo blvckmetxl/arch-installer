@@ -13,21 +13,21 @@ order += "tztime local"
 
 
 wireless wlp9s0 {
-        format_up = " wlp9s0: %essid "
-        format_down = " wlp9s0: Disconnected "
+        format_up = "  wlp9s0: %essid "
+        format_down = "  wlp9s0: Disconnected "
 }
 
 wireless tun0 {
-        format_up = " tun0: %ip   "
-        format_down = " tun0: Disconnected "
+        format_up = "  tun0: %ip "
+        format_down = "  tun0: Disconnected "
 }
 
 cpu_temperature 0 {
-        format = " %degrees °C "
+        format = "  %degrees °C "
         path = "/sys/class/thermal/thermal_zone0/temp"
 }
 
 tztime local {
-		format = " %time "
+		format = "  %time "
 		format_time = "%a %-d %b %H:%M"
 }
