@@ -110,7 +110,7 @@ echo "::1			localhost" >> /etc/hosts
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] configuring \${GREEN}/etc/pacman.conf"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
-sed -i 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
+sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 3/g' /etc/pacman.conf
 sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}"
