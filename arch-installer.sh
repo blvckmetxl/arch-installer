@@ -165,15 +165,17 @@ chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
 
-printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your dotfiles\${NC}"
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your dotfiles\${NC}\\n"
 cd /home/blvckmetxl; git clone https://github.com/blvckmetxl/stuff.git
-mv stuff/.config/* .config/
+mkdir .config; mv stuff/.config/* .config/
+chown -R blvckmetxl:blvckmetxl .config; rm -rf stuff 
 
-printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}"
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}\\n"
 git clone https://aur.archlinux.org/yay.git
 sudo -u blvckmetxl makepkg -si
+rm -rf yay
 
-printf "\\n\\n${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
+printf "\\n${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -193,7 +195,6 @@ EOF
 chmod +x /mnt/arch-installer2.sh
 
 printf "${BLUE}[${WHITE}+${BLUE}] chrooting into the fresh ${CYAN}arch ${BLUE}installation${NC}\n"
-cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 arch-chroot /mnt ./arch-installer2.sh
 
 rm /mnt/arch-installer2.sh
