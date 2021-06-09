@@ -123,8 +123,8 @@ do
 done
 
 pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop inetutils linux-headers mtools ncmpcpp zsh 
-neofetch net-tools netcat networkmanager pkgfile mpd ranger reflector ripgrep tcpdump tree ttf-ubuntu-font-family unzip 
-wget wpa_supplicant noto-fonts-cjk noto-fonts-emoji noto-fonts"
+neofetch net-tools netcat networkmanager openvpn pkgfile mpd ranger reflector ripgrep tcpdump tree ttf-ubuntu-font-family
+unzip wget wpa_supplicant noto-fonts-cjk noto-fonts-emoji noto-fonts"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
 	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
