@@ -123,7 +123,7 @@ do
 done
 
 pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop inetutils linux-headers mtools ncmpcpp zsh 
-neofetch net-tools netcat networkmanager pkgfile mpd ranger reflector ttf-ubuntu-font-family unzip wget wpa_supplicant 
+neofetch net-tools netcat networkmanager pkgfile mpd ranger reflector tree ttf-ubuntu-font-family unzip wget wpa_supplicant 
 noto-fonts-cjk noto-fonts-emoji noto-fonts"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
@@ -165,10 +165,11 @@ chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
 
-printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your dotfiles\${NC}\\n"
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your stuff setup\${NC}\\n"
 cd /home/blvckmetxl; git clone https://github.com/blvckmetxl/stuff.git
-mkdir .config; mv stuff/.config/* .config/
-chown -R blvckmetxl:blvckmetxl .config; rm -rf stuff 
+mv stuff/.config .; mv stuff/.fonts .
+chown -R blvckmetxl:blvckmetxl .config .fonts
+rm -rf stuff
 
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}\\n"
 git clone https://aur.archlinux.org/yay.git
@@ -198,6 +199,8 @@ printf "${BLUE}[${WHITE}+${BLUE}] chrooting into the fresh ${CYAN}arch ${BLUE}in
 arch-chroot /mnt ./arch-installer2.sh
 
 rm /mnt/arch-installer2.sh
+umount /mnt
+
 printf "\n\n${BLUE}[${WHITE}+${BLUE}] system successfully installed. reboot? ${GREEN}(y/n) ${BLUE}<--${WHITE} "
 while ! [ "$rb" = 'y' -o "$rb" = 'Y' -o "$rb" = 'n' -o "$rb" = 'N' ]
 do
@@ -206,7 +209,6 @@ done
 
 if [[ "$rb" == 'y' ]] || [[ "$rb" == 'Y' ]]
 then
-	umount /mnt
 	reboot
 else
 	printf "\n\n${NC}"
