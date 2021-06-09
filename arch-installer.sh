@@ -171,10 +171,8 @@ mv stuff/.config .; mv stuff/.fonts .
 chown -R blvckmetxl:blvckmetxl .config .fonts
 rm -rf stuff
 
-printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}\\n"
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] cloning \${CYAN}yay\${NC}\\n"
 git clone https://aur.archlinux.org/yay.git
-sudo -u blvckmetxl makepkg -si
-rm -rf yay
 
 printf "\\n${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
