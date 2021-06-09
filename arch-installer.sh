@@ -113,12 +113,6 @@ sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 3/g' /etc/pacman.conf
 sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 
-printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}"
-cd /opt; git clone https://aur.archlinux.org/yay.git
-chown -R blvckmetxl:blvckmetxl /opt
-sudo -u blvckmetxl makepkg -si
-chown root:root /opt
-
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${PURPLE}BlackArch\${BLUE} repos\${NC}\\n"
 curl https://blackarch.org/strap.sh | sh
 
@@ -138,7 +132,7 @@ then
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
-pacman -Syyyu --noconfirm \$pkgs
+pacman -S --noconfirm \$pkgs
 
 printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}blvckmetxl\\n"
 useradd -mG wheel,audio,video blvckmetxl -s /usr/bin/zsh
@@ -163,13 +157,23 @@ do
 		pwd=
 	fi
 done
+
+printf "\\n\\n"
 curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O
 sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
 chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
 
-printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your dotfiles\${NC}"
+cd /home/blvckmetxl; git clone https://github.com/blvckmetxl/stuff.git
+mv stuff/.config/* .config/
+
+printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${CYAN}yay\${NC}"
+git clone https://aur.archlinux.org/yay.git
+sudo -u blvckmetxl makepkg -si
+
+printf "\\n\\n${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
 grub-mkconfig -o /boot/grub/grub.cfg
 
