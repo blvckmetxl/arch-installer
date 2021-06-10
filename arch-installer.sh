@@ -165,11 +165,14 @@ chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
 
-printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your stuff setup\${NC}\\n"
-cd /home/blvckmetxl; git clone https://github.com/blvckmetxl/stuff.git
-mv stuff/.config .; mv stuff/.fonts .
-chown -R blvckmetxl:blvckmetxl .config .fonts
-rm -rf stuff
+while ! [ "\$i3" = 'y' -o "\$i3" = 'Y' -o "\$i3" = 'n' -o "\$i3" = 'N' ]
+do
+	printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your stuff setup\${NC}\\n"
+	cd /home/blvckmetxl; git clone https://github.com/blvckmetxl/stuff.git
+	mv stuff/.config .; mv stuff/.fonts .
+	chown -R blvckmetxl:blvckmetxl .config .fonts
+	rm -rf stuff
+done
 
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] cloning \${CYAN}yay\${NC}\\n"
 git clone https://aur.archlinux.org/yay.git
