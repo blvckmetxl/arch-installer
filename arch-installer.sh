@@ -105,8 +105,8 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] setting hostname and configuring \${GREEN}/etc/hosts"
 echo "arch" > /etc/hostname
 echo "KEYMAP=br-abnt2" > /etc/vconsole.conf
-echo "127.0.0.1			localhost arch" >> /etc/hosts
-echo "::1			localhost" >> /etc/hosts
+echo "127.0.0.1		localhost arch" >> /etc/hosts
+echo "::1		localhost" >> /etc/hosts
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] configuring \${GREEN}/etc/pacman.conf"
 sed -i 's/#Color/Color/g' /etc/pacman.conf
@@ -122,13 +122,12 @@ do
 	read -r -n1 i3
 done
 
-pkgs="alacritty base-devel dialog discord dosfstools firefox git grub gtop inetutils linux-headers mtools ncmpcpp zsh 
-neofetch net-tools netcat networkmanager openvpn pkgfile mpd ranger reflector ripgrep tcpdump tree ttf-ubuntu-font-family
-unzip wget wpa_supplicant noto-fonts-cjk noto-fonts-emoji noto-fonts"
+pkgs="kitty base-devel dialog discord dosfstools firefox git grub inetutils linux-headers mtools ncmpcpp zsh neofetch 
+net-tools netcat networkmanager openssh openvpn pkgfile mpd ranger reflector ripgrep tcpdump tree unzip wget noto-fonts-cjk 
+noto-fonts-emoji noto-fonts"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
-	pkgs+=" picom dunst i3-gaps i3blocks i3status lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
-	lxappearance nitrogen pavucontrol-qt pulseaudio rofi scrot xorg"
+	pkgs+=" picom i3-gaps lightdm lightdm-gtk-greeter-settings feh pavucontrol-qt pulseaudio rofi scrot xorg"
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
@@ -165,17 +164,9 @@ chmod +x install.sh
 sudo -u blvckmetxl ./install.sh
 rm install.sh
 
-while ! [ "\$i3" = 'y' -o "\$i3" = 'Y' -o "\$i3" = 'n' -o "\$i3" = 'N' ]
-do
-	printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] getting your stuff setup\${NC}\\n"
-	cd /home/blvckmetxl; git clone https://github.com/blvckmetxl/stuff.git
-	mv stuff/.config .; mv stuff/.fonts .
-	chown -R blvckmetxl:blvckmetxl .config .fonts
-	rm -rf stuff
-done
-
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] cloning \${CYAN}yay\${NC}\\n"
-git clone https://aur.archlinux.org/yay.git
+cd /home/blvckmetxl; git clone https://aur.archlinux.org/yay.git
+chown -R blvckmetxl:blvckmetxl yay
 
 printf "\\n${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
