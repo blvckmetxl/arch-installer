@@ -133,11 +133,11 @@ fi
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
 pacman -S --noconfirm \$pkgs
 
-printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}blvckmetxl\\n"
-useradd -mG wheel,audio,video blvckmetxl -s /usr/bin/zsh
+printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}bm\\n"
+useradd -mG wheel,audio,video bm -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
-echo "setxkbmap br" > /home/blvckmetxl/.profile
-chown blvckmetxl:blvckmetxl /home/blvckmetxl/.profile
+echo "setxkbmap br" > /home/bm/.profile
+chown bm:bm /home/bm/.profile
 
 test=0
 while [ -z "\$pwd" ]
@@ -150,7 +150,7 @@ do
 	
 	if [ "\$pwd" == "\$pwd2" ]
 	then
-		echo "blvckmetxl:\$pwd" | chpasswd
+		echo "bm:\$pwd" | chpasswd
 	else	
 		let "test+=1"
 		pwd=
@@ -161,12 +161,12 @@ printf "\\n\\n"
 curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O
 sed -i 's/RUNZSH:-yes/RUNZSH:-no/g' install.sh
 chmod +x install.sh
-sudo -u blvckmetxl ./install.sh
+sudo -u bm ./install.sh
 rm install.sh
 
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] cloning \${CYAN}yay\${NC}\\n"
-cd /home/blvckmetxl; git clone https://aur.archlinux.org/yay.git
-chown -R blvckmetxl:blvckmetxl yay
+cd /home/bm; git clone https://aur.archlinux.org/yay.git
+chown -R bm:bm yay
 
 printf "\\n${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
