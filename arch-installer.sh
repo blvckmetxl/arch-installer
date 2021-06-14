@@ -124,7 +124,7 @@ done
 
 pkgs="kitty base-devel dialog discord dosfstools firefox git grub inetutils linux-headers mtools ncmpcpp zsh neofetch 
 net-tools netcat networkmanager openssh openvpn pkgfile mpd ranger reflector ripgrep tcpdump tree unzip wget noto-fonts-cjk 
-noto-fonts-emoji noto-fonts"
+noto-fonts-emoji noto-fonts ttf-nerd-fonts-symbols"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
 	pkgs+=" picom i3-gaps lightdm lightdm-gtk-greeter-settings feh pavucontrol-qt pulseaudio rofi scrot xorg"
