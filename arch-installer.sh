@@ -113,9 +113,6 @@ sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 3/g' /etc/pacman.conf
 sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 
-printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing \${PURPLE}BlackArch\${BLUE} repos\${NC}\\n"
-curl https://blackarch.org/strap.sh | sh
-
 while ! [ "\$i3" = 'y' -o "\$i3" = 'Y' -o "\$i3" = 'n' -o "\$i3" = 'N' ]
 do
 	printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] install \${CYAN}i3\${BLUE}?\${GREEN} (y/n)\${BLUE} <--\${WHITE} "
@@ -123,7 +120,7 @@ do
 done
 
 pkgs="kitty base-devel dialog discord dosfstools firefox fuse2 git grub inetutils linux-headers mtools ncmpcpp zsh neofetch 
-net-tools netcat networkmanager openssh openvpn pkgfile mpd ranger reflector ripgrep tcpdump tree unzip wget noto-fonts-cjk 
+net-tools netcat networkmanager openssh openvpn pkgfile ncmpcpp mpd ranger reflector ripgrep tcpdump tree unzip wget noto-fonts-cjk 
 noto-fonts-emoji noto-fonts ttf-nerd-fonts-symbols"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
@@ -136,7 +133,7 @@ pacman -S --noconfirm \$pkgs
 printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}bm\\n"
 useradd -mG wheel,audio,video bm -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
-echo "setxkbmap br" > /home/bm/.profile
+echo "feh --bg-scale /home/bm/wallpapers/1.jpg\nsetxkbmap br\nmpd" > /home/bm/.profile
 chown bm:bm /home/bm/.profile
 
 test=0
