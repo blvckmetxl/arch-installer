@@ -119,13 +119,10 @@ do
 	read -r -n1 i3
 done
 
-pkgs="alacritty base-devel dialog discord dosfstools firefox fuse2 git grub inetutils linux-headers mtools zsh neofetch 
-net-tools netcat networkmanager openssh openvpn pkgfile ncmpcpp mpd ranger reflector ripgrep speedtest-cli tcpdump tree 
-unrar unzip wget noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-nerd-fonts-symbols feh scrot xorg-server xterm pulseaudio"
-if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
-then
-	pkgs+=" picom i3-gaps lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings pavucontrol-qt rofi"
-fi
+pkgs="alacritty base-devel dialog discord dosfstools firefox fuse2 git grub inetutils leafpad linux-headers mtools zsh 
+neofetch net-tools netcat networkmanager openssh openvpn pkgfile ncmpcpp mpd ranger reflector ripgrep speedtest-cli 
+tcpdump tree unrar unzip wget noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-nerd-fonts-symbols feh scrot xorg-server 
+xterm pulseaudio picom i3-gaps lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings pavucontrol-qt rofi"
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
 pacman -S --noconfirm \$pkgs
@@ -133,8 +130,18 @@ pacman -S --noconfirm \$pkgs
 printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}bm\\n"
 useradd -mG wheel bm -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
-echo "feh --bg-scale /home/bm/wallpapers/1.jpg\nsetxkbmap br\nmpd" > /home/bm/.profile
+echo "feh --bg-scale /home/bm/wallpapers/\$(shuf -i 1-4 -n1).jpg\nsetxkbmap br\nmpd" > /home/bm/.profile
 chown bm:bm /home/bm/.profile
+
+caf << EOF >> .zshrc
+
+alias v='nvim'
+alias sv='sudo nvim'
+alias ncmpcpp='ncmpcpp 2>/dev/null'
+alias up='sudo python3 -m http.server 80'
+alias thmvpn='sudo openvpn ~/vpns/thm.ovpn >& /dev/null &'
+alias htbvpn='sudo openvpn ~/vpns/htb.ovpn >& /dev/null &'
+EOF
 
 test=0
 while [ -z "\$pwd" ]
@@ -169,11 +176,8 @@ printf "\\n${BLUE}[\${WHITE}+\${BLUE}] installing and setting up grub\${NC}\\n"
 grub-install $disk
 grub-mkconfig -o /boot/grub/grub.cfg
 
-if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
-then
-	printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] enabling \${CYAN}LightDM\${NC}\\n"
-	systemctl enable lightdm
-fi
+printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] enabling \${CYAN}LightDM\${NC}\\n"
+systemctl enable lightdm
 
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] enabling \${CYAN}NetworkManager\${NC}\\n"
 systemctl enable NetworkManager
