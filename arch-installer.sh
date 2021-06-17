@@ -122,7 +122,7 @@ done
 pkgs="alacritty base-devel dialog discord dosfstools firefox fuse2 git grub inetutils leafpad linux-headers mtools zsh 
 neofetch net-tools netcat networkmanager openssh openvpn pkgfile ncmpcpp mpd ranger reflector ripgrep speedtest-cli 
 tcpdump tree unrar unzip wget noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-nerd-fonts-symbols feh scrot xorg-server 
-xterm pulseaudio picom i3-gaps lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings pavucontrol-qt rofi"
+xterm pulseaudio picom i3-gaps lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings pavucontrol-qt rofi qbittorrent"
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
 pacman -S --noconfirm \$pkgs
