@@ -48,7 +48,7 @@ printf "${BLUE}[${WHITE}+${BLUE}] setting the keyboard layout to ${GREEN}br-abnt
 loadkeys br-abnt2
 
 printf "${BLUE}[${WHITE}..${BLUE}] generating mirrorlist...\n"
-reflector -c Brazil -a 12 --sort rate --save /etc/pacman.d/mirrorlist >& /dev/null
+reflector -c Brazil -a 6 --sort rate --save /etc/pacman.d/mirrorlist >& /dev/null
 
 while ! [ "$opt" = 'y' -o "$opt" = 'Y' -o "$opt" = 'n' -o "$opt" = 'N' ]
 do
@@ -103,9 +103,9 @@ locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 printf "\\n\${BLUE}[\${WHITE}+\${BLUE}] setting hostname and configuring \${GREEN}/etc/hosts"
-echo "arch" > /etc/hostname
+echo "archlinux" > /etc/hostname
 echo "KEYMAP=br-abnt2" > /etc/vconsole.conf
-echo "127.0.0.1		localhost arch" >> /etc/hosts
+echo "127.0.0.1	localhost archlinux" >> /etc/hosts
 echo "::1		localhost" >> /etc/hosts
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] configuring \${GREEN}/etc/pacman.conf"
@@ -119,19 +119,20 @@ do
 	read -r -n1 i3
 done
 
-pkgs="kitty base-devel dialog discord dosfstools firefox fuse2 git grub inetutils linux-headers mtools ncmpcpp zsh neofetch 
-net-tools netcat networkmanager openssh openvpn pkgfile ncmpcpp mpd ranger reflector ripgrep tcpdump tree unzip wget noto-fonts-cjk 
-noto-fonts-emoji noto-fonts ttf-nerd-fonts-symbols"
+pkgs="alacritty base-devel dialog discord dosfstools firefox fuse2 git grub inetutils linux-headers mtools zsh neofetch 
+net-tools netcat networkmanager openssh openvpn pkgfile ncmpcpp mpd ranger reflector ripgrep speedtest-cli tcpdump tree 
+unrar unzip wget noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-nerd-fonts-symbols ttf-dejavu ttf-liberation feh 
+scrot xorg pulseaudio"
 if [[ "\$i3" == 'y' ]] || [[ "\$i3" == 'Y' ]]
 then
-	pkgs+=" picom i3-gaps lightdm lightdm-gtk-greeter-settings feh pavucontrol-qt pulseaudio rofi scrot xorg"
+	pkgs+=" picom i3-gaps lightdm lightdm-webkit2-greeter lightdm-gtk-greeter-settings pavucontrol-qt rofi"
 fi
 
 printf "\\n\\n\${BLUE}[\${WHITE}+\${BLUE}] installing packages\${NC}\\n"
 pacman -S --noconfirm \$pkgs
 
 printf "\\n\${BLUE}[\${WHITE}..\${BLUE}] setting up user \${CYAN}bm\\n"
-useradd -mG wheel,audio,video bm -s /usr/bin/zsh
+useradd -mG wheel bm -s /usr/bin/zsh
 sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
 echo "feh --bg-scale /home/bm/wallpapers/1.jpg\nsetxkbmap br\nmpd" > /home/bm/.profile
 chown bm:bm /home/bm/.profile
