@@ -44,7 +44,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start terminal, discord and firefox
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 bindsym $mod+c exec discord
 bindsym $mod+b exec firefox
 
@@ -211,7 +211,10 @@ bar {
 
 # ss
 bindsym $mod+Shift+s exec scrot -q 100 /home/bm/screenshots/%a-%d_%H:%M:%S.jpg && feh /home/bm/screenshots/$(ls -Art /home/bm/screenshots/ | tail -n1)
-bindsym $mod+n exec feh --bg-scale /home/bm/wallpapers/$(shuf -i 1-4 -n1).jpg
+bindsym $mod+Shift+n exec feh --bg-scale /home/bm/wallpapers/$(shuf -i 1-4 -n1).jpg
+
+# notes
+bindsym $mod+n exec leafpad
 
 # autorun
 exec --no-startup-id picom -f &
