@@ -115,36 +115,36 @@ set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+#set $ws5 "5"
+#set $ws6 "6"
+#set $ws7 "7"
+#set $ws8 "8"
+#set $ws9 "9"
+#set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
 bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
+#bindsym $mod+5 workspace number $ws5
+#bindsym $mod+6 workspace number $ws6
+#bindsym $mod+7 workspace number $ws7
+#bindsym $mod+8 workspace number $ws8
+#bindsym $mod+9 workspace number $ws9
+#bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
 bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+#bindsym $mod+Shift+5 move container to workspace number $ws5
+#bindsym $mod+Shift+6 move container to workspace number $ws6
+#bindsym $mod+Shift+7 move container to workspace number $ws7
+#bindsym $mod+Shift+8 move container to workspace number $ws8
+#bindsym $mod+Shift+9 move container to workspace number $ws9
+#bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -152,6 +152,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -f mononoki Nerd Font Mono -t warning -m 'Exit?' -B 'Yes' 'i3-msg exit'"
+bindsym $mod+x exec betterlockscreen -l dimblur
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -183,24 +184,34 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+	height 21
 	position top
 	tray_output none
 	
 	colors {
 		background #01090a
-		statusline #000000
-		separator  #000000
+		statusline #01090a
+		separator  #01090a
 
 		#Type 		  border  bg 	  font
 		focused_workspace  #01090a #01090a #ffffff
 		active_workspace   #01090a #01090a #ffffff
 		inactive_workspace #01090a #01090a #9c9a9a
-		urgent_workspace   #01090a #01090a #ffffff
+		urgent_workspace   #01090a #01090a #9c9a9a
 	}
 
-	status_command /usr/bin/bumblebee-status -m mpd spacer pasink \
-	pasource spacer time -p spacer.text="°o._" time.format="%H:%M" -t iceberg-rainbow
+	status_command /usr/bin/bumblebee-status -m mpd spacer memory cpu2 nic spacer pasink pasource spacer \
+		time -p cpu2.layout="cpu2.temp" cpu2.temp_pattern="input" nic.exclude="enp5s0,lo,wlp9s0" \
+		nic.format="{intf} {ip}" time.format="%H:%M" spacer.text="永" -t iceberg-rainbow
 }
+
+# gaps for ss's
+#gaps inner 17
+#gaps outer 20
+
+# ss
+bindsym $mod+Shift+s exec scrot -q 100 /home/bm/screenshots/%a-%d_%H:%M:%S.jpg && feh /home/bm/screenshots/$(ls -Art /home/bm/screenshots/ | tail -n1)
+bindsym $mod+n exec feh --bg-scale /home/bm/wallpapers/$(shuf -i 1-4 -n1).jpg
 
 # autorun
 exec --no-startup-id picom -f &
