@@ -64,11 +64,11 @@ rm -rf $HOME/.config/rofi
 rm -rf $HOME/.config/alacritty
 mv .config/* $HOME/.config
 
-pacman -S --noconfirm firefox alacritty xterm unzip dialog i3-gaps rofi xorg-server pcmanfm discord openvpn feh scrot reflector
-yay -S bumblebee-status spotify-adblock
-yay --mflags --skipinteg spotify
-
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
 
 mv solarized-darker.rasi /usr/share/rofi/themes
+
+pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xorg-server pcmanfm discord openvpn feh scrot gparted reflector
+yay -S bumblebee-status spotify-adblock
+yay --mflags --skipinteg spotify
