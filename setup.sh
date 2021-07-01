@@ -57,18 +57,20 @@ fi
 
 echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment
 
-[ ! -d "$HOME/.config" ] && mv .config $HOME && exit
-
-rm -rf $HOME/.config/i3
-rm -rf $HOME/.config/rofi
-rm -rf $HOME/.config/alacritty
-mv .config/* $HOME/.config
-
-mv spotify.desktop /usr/share/applications
-rm /usr/share/applications/spotify-adblock.desktop
-
-mv solarized-darker.rasi /usr/share/rofi/themes
+if [ ! -d "$HOME/.config" ]
+then
+	mv .config $HOME
+else
+	rm -rf $HOME/.config/i3 2>/dev/null
+	rm -rf $HOME/.config/rofi 2>/dev/null
+	rm -rf $HOME/.config/alacritty 2>/dev/null
+	mv .config/* $HOME/.config
+fi
 
 pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xorg-server pcmanfm discord openvpn feh scrot gparted reflector
+mv solarized-darker.rasi /usr/share/rofi/themes
+
 yay -S bumblebee-status spotify-adblock
 yay --mflags --skipinteg spotify
+mv spotify.desktop /usr/share/applications
+rm /usr/share/applications/spotify-adblock.desktop
