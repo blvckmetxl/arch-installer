@@ -8,7 +8,7 @@ export ZSH="/home/bm/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="clean"
+ZSH_THEME="bm"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -83,7 +83,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+export EDITOR='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
@@ -101,7 +101,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias v="nvim"
-alias ncmpcpp="ncmpcpp 2>/dev/null"
+alias sv="sudo nvim"
+alias svh="sudo nvim /etc/hosts"
 alias up="sudo python3 -m http.server 80"
 alias thmvpn="sudo openvpn ~/vpns/thm.ovpn >& /dev/null &"
 alias htbvpn="sudo openvpn ~/vpns/htb.ovpn >& /dev/null &"
