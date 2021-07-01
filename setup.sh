@@ -70,3 +70,5 @@ yay --mflags --skipinteg spotify
 
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
+
+mv solarized-darker.rasi /usr/share/rofi/themes
