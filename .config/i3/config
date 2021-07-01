@@ -33,23 +33,23 @@ default_floating_border pixel 1
 #exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-set $killbar ps aux | rg "bumblebee-status" | grep "rg " -v | awk {'print $2'} | xargs kill -SIGUSR1 
+set $killbar ps aux | rg "bumblebee-status" | grep "rg " -v | awk {'print $2'} | xargs kill -SIGUSR1
 #set $refresh_i3status killall -SIGUSR1 python3
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $killbar
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $killbar
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $killbar
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $killbar
+#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $killbar
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start terminal, discord and firefox
 bindsym $mod+Return exec alacritty
-bindsym $mod+c exec discord
+#bindsym $mod+c exec discord
 bindsym $mod+b exec firefox
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+c kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show drun -font "mononoki Nerd Font Mono 11" -show-icons -display-drun ""
@@ -200,21 +200,36 @@ bar {
 		urgent_workspace   #01090a #01090a #9c9a9a
 	}
 
-	status_command /usr/bin/bumblebee-status -m mpd spacer memory cpu2 nic spacer pasink pasource spacer \
-		time -p cpu2.layout="cpu2.temp" cpu2.temp_pattern="input" nic.exclude="enp5s0,lo,wlp9s0" \
+	status_command /usr/bin/bumblebee-status -m spotify spacer memory cpu2 nic spacer pasink pasource spacer \
+		time system -p cpu2.layout="cpu2.temp" cpu2.temp_pattern="input" nic.exclude="enp5s0,lo,wlp9s0" \
 		nic.format="{intf} {ip}" time.format="%H:%M" spacer.text="永" -t iceberg-rainbow
 }
 
-# gaps for ss's
-#gaps inner 17
-#gaps outer 20
+# scripts for gap toggle
+bindsym $mod+g exec /home/bm/scripts/tg.sh
+bindsym $mod+Shift+g exec /home/bm/scripts/tg.sh ss
+
+# gaps
+gaps inner 7
+gaps outer 9
 
 # ss
 bindsym $mod+Shift+s exec scrot -q 100 /home/bm/screenshots/%a-%d_%H:%M:%S.jpg && feh /home/bm/screenshots/$(ls -Art /home/bm/screenshots/ | tail -n1)
-bindsym $mod+Shift+n exec feh --bg-scale /home/bm/wallpapers/$(shuf -i 1-4 -n1).jpg
+bindsym $mod+Shift+n exec /home/bm/scripts/chwp.sh
 
 # notes
 bindsym $mod+n exec leafpad
 
+# spotify
+bindsym $mod+m exec LD_PRELOAD=/usr/lib/spotify-adblock.so spotify
+
 # autorun
+exec --no-startup-id /home/bm/scripts/chwp.sh
+exec --no-startup-id setxkbmap br
 exec --no-startup-id picom -f &
+
+# Spotify related key bindings
+bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+bindsym XF86AudioStop exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
+bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+bindsym XF86AudioNext exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
