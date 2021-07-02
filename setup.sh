@@ -71,6 +71,7 @@ pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xor
 mv solarized-darker.rasi /usr/share/rofi/themes
 
 yay -S bumblebee-status spotify-adblock
+mv system.py /usr/share/bumblebee-status/bumblebee_status/modules/contrib/
 yay --mflags --skipinteg spotify
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
