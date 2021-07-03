@@ -24,29 +24,42 @@ then
 	pacman -S base-devel
 fi
 
+sleep 1
+
 git clone https://aur.archlinux.org/yay.git
+chown bm:bm -R yay
 cd yay && sudo -u bm makepkg -si
 cd .. && rm -rf yay
 
+sleep 1
+
 git clone https://github.com/klange/nyancat.git
-cd nyancat && make && cd src && mv nyancat /usr/bin
+chown bm:bm -R nyancat
+cd nyancat && sudo -u bm make && mv src/nyancat /usr/bin
 cd .. && rm -rf nyancat
 
-[ "$PWD" != "$HOME/stuff" ] && cd $HOME/stuff
+sleep 1
 
 pacman -Qs zsh >& /dev/null
 if [ "$?" -ne 0 ]
 then
 	pacman -S zsh
 fi
-[ ! -d "$HOME/.oh-my-zsh" ] && curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O && sed -i 's/RUNZSH=${RUNZSH:-yes}/RUNZSH=${RUNZSH:-no}/g' install.sh && chmod +x install.sh && ./install.sh && rm install.sh
-mv bm.zsh-theme $HOME/.oh-my-zsh/custom/themes
-mv .zshrc $HOME
 
-mv wallpapers $HOME
-mv scripts $HOME
-echo 1 > $HOME/scripts/gc
-mkdir $HOME/screenshots
+sleep 1
+
+[ ! -d "/home/bm/.oh-my-zsh" ] && curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O && sed -i 's/RUNZSH=${RUNZSH:-yes}/RUNZSH=${RUNZSH:-no}/g' install.sh && chmod +x install.sh && chown bm:bm install.sh && sudo -u bm ./install.sh && rm install.sh
+mv bm.zsh-theme /home/bm/.oh-my-zsh/custom/themes
+mv .zshrc /home/bm
+
+sleep 1
+
+mv wallpapers /home/bm
+mv scripts /home/bm
+echo 1 > /home/bm/scripts/gc
+mkdir /home/bm/screenshots
+
+sleep 1
 
 pacman -Qs picom >& /dev/null
 if [ "$?" -ne 0 ]
@@ -55,23 +68,44 @@ then
 	mv picom.conf /etc/xdg/picom.conf
 fi
 
-echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment
+sleep 1
 
-if [ ! -d "$HOME/.config" ]
+echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment # fix burpsuite weird font
+
+if [ ! -d "/home/bm/.config" ]
 then
-	mv .config $HOME
+	mv .config /home/bm
 else
-	rm -rf $HOME/.config/i3 2>/dev/null
-	rm -rf $HOME/.config/rofi 2>/dev/null
-	rm -rf $HOME/.config/alacritty 2>/dev/null
-	mv .config/* $HOME/.config
+	rm -rf /home/bm/.config/i3 2>/dev/null
+	rm -rf /home/bm/.config/rofi 2>/dev/null
+	rm -rf /home/bm/.config/alacritty 2>/dev/null
+	mv .config/* /home/bm/.config
 fi
 
-pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xorg-server pcmanfm discord openvpn feh scrot gparted reflector
-mv solarized-darker.rasi /usr/share/rofi/themes
+sleep 1
 
-yay -S bumblebee-status spotify-adblock
+pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xorg-server thunar discord openvpn feh scrot gparted reflector tk lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip gvfs gvfs-afc # needed for thunar to show my usb
+sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
+mv solarized-darker.rasi /usr/share/rofi/themes
+echo "* * * * * root /usr/bin/pkgfile --update" >> /etc/cron.d/0hourly
+systemctl enable lightdm
+systemclt enable --now cronie
+
+sleep 1
+
+sudo -u bm yay -S bumblebee-status neovim nerd-fonts-mononoki
 mv system.py /usr/share/bumblebee-status/bumblebee_status/modules/contrib/
-yay --mflags --skipinteg spotify
+
+sleep 1
+
+sudo -u bm yay --nopgpfetch --mflags --skipinteg spotify spotify-adblock
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
+
+sleep 1
+
+pip install dbus-python # needed for bumblebee-status spotify module
+
+sleep 1
+
+curl https://blackarch.org/strap.sh | sh
