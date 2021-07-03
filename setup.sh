@@ -89,6 +89,7 @@ sleep 1
 
 pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xorg-server thunar discord openvpn feh scrot gparted reflector tk lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip gvfs gvfs-afc # needed for thunar to show my usb
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
+sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop # workaround not running polkit
 chown root:root solarized-darker.rasi
 mv solarized-darker.rasi /usr/share/rofi/themes
 echo "* * * * * root /usr/bin/pkgfile --update" >> /etc/cron.d/0hourly
