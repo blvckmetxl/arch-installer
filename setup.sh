@@ -96,6 +96,8 @@ echo "* * * * * root /usr/bin/pkgfile --update" >> /etc/cron.d/0hourly
 mkdir -p /home/bm/.icons/default
 echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simple-and-Soft" > /home/bm/.icons/default/index.theme
 ln -s /usr/share/icons/Simple-and-Soft/cursors ~/.icons/default/cursors
+curl -O https://raw.githubusercontent.com/jluttine/rofi-power-menu/master/rofi-power-menu && chmod +x rofi-power-menu
+sed -i 's/all=(shutdown reboot suspend hibernate logout lockscreen)/all=(shutdown reboot logout suspend)/g' rofi-power-menu && mv rofi-power-menu /usr/bin
 systemctl enable lightdm
 systemclt enable --now cronie
 
@@ -103,7 +105,6 @@ sleep 1
 
 sudo -u bm yay -S bumblebee-status neovim nerd-fonts-mononoki
 chown root:root system.py
-mv system.py /usr/share/bumblebee-status/bumblebee_status/modules/contrib/
 
 sleep 1
 
