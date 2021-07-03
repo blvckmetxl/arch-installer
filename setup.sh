@@ -57,7 +57,9 @@ sleep 1
 mv wallpapers /home/bm
 mv scripts /home/bm
 echo 1 > /home/bm/scripts/gc
+chown bm:bm /home/bm/scripts/gc
 mkdir /home/bm/screenshots
+chown bm:bm /home/bm/screenshots
 
 sleep 1
 
@@ -65,6 +67,7 @@ pacman -Qs picom >& /dev/null
 if [ "$?" -ne 0 ]
 then
 	pacman -S picom
+	chown root:root picom.conf
 	mv picom.conf /etc/xdg/picom.conf
 fi
 
@@ -86,6 +89,7 @@ sleep 1
 
 pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xorg-server thunar discord openvpn feh scrot gparted reflector tk lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip gvfs gvfs-afc # needed for thunar to show my usb
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
+chown root:root solarized-darker.rasi
 mv solarized-darker.rasi /usr/share/rofi/themes
 echo "* * * * * root /usr/bin/pkgfile --update" >> /etc/cron.d/0hourly
 systemctl enable lightdm
@@ -94,11 +98,13 @@ systemclt enable --now cronie
 sleep 1
 
 sudo -u bm yay -S bumblebee-status neovim nerd-fonts-mononoki
+chown root:root system.py
 mv system.py /usr/share/bumblebee-status/bumblebee_status/modules/contrib/
 
 sleep 1
 
 sudo -u bm yay --nopgpfetch --mflags --skipinteg spotify spotify-adblock
+chown root:root spotify.desktop
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
 
