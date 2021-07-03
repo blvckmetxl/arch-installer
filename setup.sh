@@ -56,6 +56,7 @@ sleep 1
 
 mv wallpapers /home/bm
 mv scripts /home/bm
+chmod +x /home/bm/scripts/chwp.sh /home/bm/scripts/tg.sh
 echo 1 > /home/bm/scripts/gc
 chown bm:bm /home/bm/scripts/gc
 mkdir /home/bm/screenshots
