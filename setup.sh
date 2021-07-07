@@ -1,4 +1,4 @@
-#!/bin/bash
+	#!/bin/bash
 
 if [ "$EUID" -ne 0 ]
 then
@@ -18,14 +18,9 @@ then
 	esac
 fi
 
-pacman -Qs base-devel >& /dev/null
-if [ "$?" -ne 0 ]
-then
-	pacman -S base-devel
-fi
-
 sleep 1
 
+pacman -S base-devel >& /dev/null
 git clone https://aur.archlinux.org/yay.git
 chown bm:bm -R yay
 cd yay && sudo -u bm makepkg -si
@@ -88,7 +83,7 @@ fi
 
 sleep 1
 
-pacman -S --noconfirm firefox alacritty xterm unzip wget dialog i3-gaps rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector tk lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip xdg-utils gvfs gvfs-afc # needed for thunar to show my usb
+pacman -S --noconfirm firefox ripgrep alacritty xterm unzip wget dialog i3-gaps rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector tk lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip xdg-utils gvfs gvfs-afc # needed for thunar to show my usb
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop # workaround not running polkit
 chown root:root solarized-darker.rasi
@@ -105,7 +100,6 @@ systemclt enable --now cronie
 sleep 1
 
 sudo -u bm yay -S bumblebee-status neovim nerd-fonts-mononoki suru-plus-git
-chown root:root system.py
 
 sleep 1
 
@@ -121,3 +115,4 @@ pip install dbus-python # needed for bumblebee-status spotify module
 sleep 1
 
 curl https://blackarch.org/strap.sh | sh
+sudo kill -9 `pidof pulseaudio` && pulseaudio
