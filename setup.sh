@@ -53,6 +53,11 @@ chown bm:bm /home/bm/scripts/gc
 mkdir /home/bm/screenshots
 mkdir /home/bm/vpns
 mkdir /opt/wordlists
+wget https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
+gzip -d rockyou.txt.gz
+mv rockyou.txt /opt/wordlists
+curl -O https://raw.githubusercontent.com/daviddias/node-dirbuster/master/lists/directory-list-2.3-medium.txt
+mv directory-list-2.3-medium.txt /opt/wordlists
 mkdir /etc/feroxbuster
 echo -e "wordlist = \"/opt/wordlists/directory-list-2.3-medium.txt\"\nthreads = 10\nsave_state = false" > /etc/feroxbuster/ferox-config.toml
 mkdir /etc/samba
