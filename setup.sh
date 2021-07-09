@@ -1,4 +1,4 @@
-	#!/bin/bash
+#!/bin/bash
 
 if [ "$EUID" -ne 0 ]
 then
@@ -18,22 +18,17 @@ then
 	esac
 fi
 
-sleep 1
-
 pacman -S base-devel >& /dev/null
 git clone https://aur.archlinux.org/yay.git
 chown bm:bm -R yay
 cd yay && sudo -u bm makepkg -si
 cd .. && rm -rf yay
-
-sleep 1
+sudo pacman -Rns go
 
 git clone https://github.com/klange/nyancat.git
 chown bm:bm -R nyancat
 cd nyancat && sudo -u bm make && mv src/nyancat /usr/bin
 cd .. && rm -rf nyancat
-
-sleep 1
 
 pacman -Qs zsh >& /dev/null
 if [ "$?" -ne 0 ]
@@ -99,9 +94,9 @@ sed -i 's/all=(shutdown reboot suspend hibernate logout lockscreen)/all=(shutdow
 systemctl enable lightdm
 systemctl enable --now cronie
 
-sudo -u bm yay -S bumblebee-status neovim nerd-fonts-mononoki suru-plus-git
+sudo -u bm yay -S --removemake bumblebee-status neovim nerd-fonts-mononoki suru-plus-git
 
-sudo -u bm yay --nopgpfetch --mflags --skipinteg spotify spotify-adblock tor-browser
+sudo -u bm yay --removemake --nopgpfetch --mflags --skipinteg spotify spotify-adblock tor-browser
 chown root:root spotify.desktop
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
