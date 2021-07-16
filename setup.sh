@@ -18,6 +18,10 @@ then
 	esac
 fi
 
+sed -i "s/#Color/Color/g" /etc/pacman.conf
+sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
+sed -i "s/#ParallelDownloads/ParallelDownloads/g" /etc/pacman.conf
+
 pacman -S base-devel >& /dev/null
 git clone https://aur.archlinux.org/yay.git
 chown bm:bm -R yay
