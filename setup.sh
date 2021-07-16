@@ -62,6 +62,7 @@ then
 fi
 
 echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment # fix burpsuite weird font
+echo "setxkbmap br" >> /home/bm/.profile
 
 if [ ! -d "/home/bm/.config" ]
 then
@@ -85,7 +86,6 @@ echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simp
 chown bm:bm /home/bm/.icons/default/index.theme
 systemctl enable lightdm
 systemctl enable --now cronie
-sudo kill -9 `pidof pulseaudio` && pulseaudio &
 
 sudo -u bm yay -S --removemake bumblebee-status neovim nerd-fonts-mononoki suru-plus-git
 
@@ -96,4 +96,5 @@ rm /usr/share/applications/spotify-adblock.desktop
 
 pip install dbus-python # needed for bumblebee-status spotify module
 
+sudo kill -9 `pidof pulseaudio` && pulseaudio &
 curl https://blackarch.org/strap.sh | sh
