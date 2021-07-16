@@ -72,15 +72,17 @@ else
 	mv .config/* /home/bm/.config
 fi
 
-pacman -S --noconfirm firefox ripgrep net-tools netcat alacritty xterm unzip tcpdump wget dialog i3-gaps qbittorrent arandr vlc rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector tk lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip xdg-utils gvfs gvfs-afc # needed for thunar to show my usb
+pacman -S --noconfirm firefox ripgrep net-tools netcat alacritty xterm unzip tcpdump wget dialog i3-gaps qbittorrent awesome-terminal-fonts 
+arandr vlc rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector 
+lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip 
+xdg-utils gvfs gvfs-afc # needed for thunar to show my usb
+
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
-sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop # workaround not running polkit
+sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
 echo "* * * * * root /usr/bin/pkgfile --update" >> /etc/cron.d/0hourly
 mkdir -p /home/bm/.icons/default && chown -R bm:bm /home/bm/.icons
 echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simple-and-Soft" > /home/bm/.icons/default/index.theme
 chown bm:bm /home/bm/.icons/default/index.theme
-curl -O https://raw.githubusercontent.com/jluttine/rofi-power-menu/master/rofi-power-menu && chmod +x rofi-power-menu
-sed -i 's/all=(shutdown reboot suspend hibernate logout lockscreen)/all=(shutdown reboot logout suspend)/g' rofi-power-menu && mv rofi-power-menu /usr/bin
 systemctl enable lightdm
 systemctl enable --now cronie
 sudo kill -9 `pidof pulseaudio` && pulseaudio
