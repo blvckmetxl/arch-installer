@@ -72,10 +72,10 @@ else
 	mv .config/* /home/bm/.config
 fi
 
-pacman -S --noconfirm firefox ripgrep net-tools netcat alacritty xterm unzip tcpdump wget dialog i3-gaps qbittorrent awesome-terminal-fonts 
-arandr vlc rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector 
-lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip 
-xdg-utils gvfs gvfs-afc # needed for thunar to show my usb
+pacman -S --noconfirm firefox ripgrep netcat alacritty xterm unzip tcpdump wget dialog i3-gaps qbittorrent awesome-terminal-fonts arandr 
+vlc rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector lightdm 
+lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip xdg-utils 
+gvfs gvfs-afc
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
@@ -85,7 +85,7 @@ echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simp
 chown bm:bm /home/bm/.icons/default/index.theme
 systemctl enable lightdm
 systemctl enable --now cronie
-sudo kill -9 `pidof pulseaudio` && pulseaudio
+sudo kill -9 `pidof pulseaudio` && pulseaudio &
 
 sudo -u bm yay -S --removemake bumblebee-status neovim nerd-fonts-mononoki suru-plus-git
 
