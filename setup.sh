@@ -41,10 +41,6 @@ mv bm.zsh-theme /home/bm/.oh-my-zsh/custom/themes
 mv .zshrc /home/bm
 
 mv wallpapers /home/bm
-mv scripts /home/bm
-chmod +x /home/bm/scripts/chwp.sh /home/bm/scripts/tg.sh
-echo 1 > /home/bm/scripts/gc
-chown bm:bm /home/bm/scripts/gc
 mkdir /home/bm/screenshots
 mkdir /home/bm/vpns
 mkdir /opt/wordlists
@@ -63,8 +59,6 @@ pacman -Qs picom >& /dev/null
 if [ "$?" -ne 0 ]
 then
 	pacman -S picom
-	chown root:root picom.conf
-	mv picom.conf /etc/xdg/picom.conf
 fi
 
 echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment # fix burpsuite weird font
@@ -74,7 +68,6 @@ then
 	mv .config /home/bm
 else
 	rm -rf /home/bm/.config/i3 2>/dev/null
-	rm -rf /home/bm/.config/rofi 2>/dev/null
 	rm -rf /home/bm/.config/alacritty 2>/dev/null
 	mv .config/* /home/bm/.config
 fi
@@ -82,13 +75,10 @@ fi
 pacman -S --noconfirm firefox ripgrep net-tools netcat alacritty xterm unzip tcpdump wget dialog i3-gaps qbittorrent arandr vlc rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector tk lightdm lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip xdg-utils gvfs gvfs-afc # needed for thunar to show my usb
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop # workaround not running polkit
-chown root:root solarized-darker.rasi
-mv solarized-darker.rasi /usr/share/rofi/themes
 echo "* * * * * root /usr/bin/pkgfile --update" >> /etc/cron.d/0hourly
 mkdir -p /home/bm/.icons/default && chown -R bm:bm /home/bm/.icons
 echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simple-and-Soft" > /home/bm/.icons/default/index.theme
 chown bm:bm /home/bm/.icons/default/index.theme
-ln -s /usr/share/icons/Simple-and-Soft/cursors /home/bm/.icons/default/cursors
 curl -O https://raw.githubusercontent.com/jluttine/rofi-power-menu/master/rofi-power-menu && chmod +x rofi-power-menu
 sed -i 's/all=(shutdown reboot suspend hibernate logout lockscreen)/all=(shutdown reboot logout suspend)/g' rofi-power-menu && mv rofi-power-menu /usr/bin
 systemctl enable lightdm
