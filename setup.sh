@@ -67,19 +67,14 @@ fi
 
 echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment # fix burpsuite weird font
 echo "setxkbmap br" >> /home/bm/.profile
+chown bm:bm /home/bm/.profile
 
-if [ ! -d "/home/bm/.config" ]
-then
-	mv .config /home/bm
-else
-	rm -rf /home/bm/.config/i3 2>/dev/null
-	rm -rf /home/bm/.config/alacritty 2>/dev/null
-	mv .config/* /home/bm/.config
-fi
+rm -rf /home/bm/.config 2>/dev/null
+mv .config /home/bm
 
 pacman -S --noconfirm firefox ripgrep netcat alacritty xterm unzip tcpdump wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr 
-vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm 
-lightdm-gtk-greeter cronie pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc
+vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap
+lightdm-gtk-greeter cronie pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
