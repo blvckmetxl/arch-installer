@@ -77,7 +77,7 @@ cd /home/bm/.config
 chmod +x bspwm/bspwmrc polybar/launch.sh polybar/mic.sh
 cd $dir
 
-pacman -S --noconfirm firefox ripgrep netcat alacritty unzip tcpdump flameshot wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
+pacman -S --noconfirm firefox ripgrep netcat alacritty unzip tcpdump flameshot xorg-xsetroot wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
