@@ -43,7 +43,6 @@ if [ "$?" -ne 0 ]
 then
 	pacman -S --noconfirm wget
 fi
-
 wget https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
 gzip -d rockyou.txt.gz
 mv rockyou.txt /opt/wordlists
@@ -66,7 +65,7 @@ cd /home/bm/.config
 chmod +x bspwm/bspwmrc polybar/launch.sh polybar/mic.sh rofi/launcher.sh
 cd $dir
 
-pacman -S --noconfirm firefox picom ripgrep netcat alacritty unzip tcpdump flameshot xorg-xsetroot dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
+pacman -S --noconfirm picom firefox ripgrep netcat alacritty unzip tcpdump flameshot xorg-xsetroot dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
@@ -86,11 +85,10 @@ cd /usr/share/nvim/runtime/colors
 curl -O https://raw.githubusercontent.com/AlessandroYorba/Sierra/master/colors/sierra.vim
 echo -e "\nhi Normal guibg=NONE ctermbg=NONE" >> sierra.vim
 
+echo -e "colorscheme sierra\nset number" > /home/bm/.nvimrc
+chown bm:bm /home/bm/.nvimrc
 mkdir /home/bm/.config/nvim
 echo "source ~/.nvimrc" >> /home/bm/.config/nvim/init.vim
 chown -R bm:bm /home/bm/.config/nvim
-
-echo -e "colorscheme sierra\nset number" >> /home/bm/.nvimrc
-chown bm:bm /home/bm/.nvimrc
 
 cd $dir
