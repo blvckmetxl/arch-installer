@@ -6,23 +6,11 @@ then
 	exit
 fi
 
-ping -c 1 -W 1 archlinux.org >& /dev/null
-if [ "$?" -ne 0 ]
-then
-	echo "no internet"
-	read -r -p "open NMTUI? (y/n) " x
-
-	case $x in
-		[Yy]* ) nmtui;;
-		* ) exit;;
-	esac
-fi
-
 sed -i "s/#Color/Color/g" /etc/pacman.conf
 sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
 sed -i "s/#ParallelDownloads/ParallelDownloads/g" /etc/pacman.conf
 
-pacman -S base-devel >& /dev/null
+pacman -S --noconfirm base-devel
 git clone https://aur.archlinux.org/yay.git
 chown bm:bm -R yay
 cd yay && sudo -u bm makepkg -si
@@ -32,12 +20,13 @@ sudo pacman -Rns go
 git clone https://github.com/klange/nyancat.git
 chown bm:bm -R nyancat
 cd nyancat && sudo -u bm make && mv src/nyancat /usr/bin
+chown root:root /usr/bin/nyancat
 cd .. && rm -rf nyancat
 
 pacman -Qs zsh >& /dev/null
 if [ "$?" -ne 0 ]
 then
-	pacman -S zsh
+	pacman -S --noconfirm zsh
 fi
 
 [ ! -d "/home/bm/.oh-my-zsh" ] && curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O && sed -i 's/RUNZSH=${RUNZSH:-yes}/RUNZSH=${RUNZSH:-no}/g' install.sh && chmod +x install.sh && chown bm:bm install.sh && sudo -u bm ./install.sh && rm install.sh
@@ -46,7 +35,15 @@ mv .zshrc /home/bm
 
 mv wallpapers /home/bm
 mkdir /home/bm/vpns
+chown bm:bm /home/bm/vpns
 mkdir /opt/wordlists
+
+pacman -Qs wget >& /dev/null
+if [ "$?" -ne 0 ]
+then
+	pacman -S --noconfirm wget
+fi
+
 wget https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
 gzip -d rockyou.txt.gz
 mv rockyou.txt /opt/wordlists
@@ -56,14 +53,6 @@ mkdir /etc/feroxbuster
 echo -e "wordlist = \"/opt/wordlists/directory-list-2.3-medium.txt\"\nthreads = 10\nsave_state = false" > /etc/feroxbuster/ferox-config.toml
 mkdir /etc/samba
 touch /etc/samba/smb.conf
-chown bm:bm /home/bm/screenshots
-mv wallpapers /home/bm
-
-pacman -Qs picom >& /dev/null
-if [ "$?" -ne 0 ]
-then
-	pacman -S picom
-fi
 
 echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment # fix burpsuite weird font
 echo "setxkbmap br" >> /home/bm/.profile
@@ -77,7 +66,7 @@ cd /home/bm/.config
 chmod +x bspwm/bspwmrc polybar/launch.sh polybar/mic.sh
 cd $dir
 
-pacman -S --noconfirm firefox ripgrep netcat alacritty unzip tcpdump flameshot xorg-xsetroot wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
+pacman -S --noconfirm firefox picom ripgrep netcat alacritty unzip tcpdump flameshot xorg-xsetroot dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
@@ -92,3 +81,16 @@ sudo -u bm yay -S --noconfirm --removemake --nopgpfetch --mflags --skipinteg spo
 chown root:root spotify.desktop
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
+
+cd /usr/share/nvim/runtime/colors
+curl -O https://raw.githubusercontent.com/AlessandroYorba/Sierra/master/colors/sierra.vim
+echo -e "\nhi Normal guibg=NONE ctermbg=NONE" >> sierra.vim
+
+mkdir /home/bm/.config/nvim
+echo "source ~/.nvimrc" >> /home/bm/.config/nvim/init.vim
+chown -R bm:bm /home/bm/.config/nvim
+
+echo -e "colorscheme sierra\nset number" >> /home/bm/.nvimrc
+chown bm:bm /home/bm/.nvimrc
+
+cd $dir
