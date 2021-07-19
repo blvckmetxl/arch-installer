@@ -45,7 +45,6 @@ mv bm.zsh-theme /home/bm/.oh-my-zsh/custom/themes
 mv .zshrc /home/bm
 
 mv wallpapers /home/bm
-mkdir /home/bm/screenshots
 mkdir /home/bm/vpns
 mkdir /opt/wordlists
 wget https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
@@ -73,9 +72,7 @@ chown bm:bm /home/bm/.profile
 rm -rf /home/bm/.config 2>/dev/null
 mv .config /home/bm
 
-pacman -S --noconfirm firefox ripgrep netcat alacritty xterm unzip tcpdump wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr 
-vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap
-lightdm-gtk-greeter cronie pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel ranger
+pacman -S --noconfirm firefox ripgrep netcat alacritty unzip tcpdump flameshot wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap lightdm-gtk-greeter cronie pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
@@ -85,11 +82,9 @@ chown bm:bm /home/bm/.icons/default/index.theme
 systemctl enable lightdm
 systemctl enable --now cronie
 
-sudo -u bm yay -S --removemake bumblebee-status neovim nerd-fonts-mononoki suru-plus-git
+sudo -u bm yay -S --noconfirm --removemake neovim nerd-fonts-mononoki suru-plus-git polybar
 
-sudo -u bm yay --removemake --nopgpfetch --mflags --skipinteg spotify spotify-adblock tor-browser polybar
+sudo -u bm yay -S --noconfirm --removemake --nopgpfetch --mflags --skipinteg spotify spotify-adblock tor-browser
 chown root:root spotify.desktop
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
-
-sudo kill -9 `pidof pulseaudio` && pulseaudio &
