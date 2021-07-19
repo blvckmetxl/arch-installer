@@ -1,0 +1,24 @@
+#! /bin/sh
+
+#### AUTOSTART ####
+xsetroot -cursor_name left_ptr
+sxhkd &
+feh --bg-scale Downloads/9a9f1f0dfcff961db099320707b31483.jpg
+/home/bm/.config/polybar/launch.sh &
+picom -f -b
+
+#### MONITOR ####
+bspc monitor -d I II III IV V VI # VII VIII IX X
+
+#### BSPWM CONFIGURATION ####
+bspc config focus_follows_pointer true
+bspc config top_padding		36
+bspc config bottom_padding	1
+bspc config left_padding	1
+bspc config right_padding	1
+bspc config border_width	0
+bspc config window_gap		7
+bspc config borderless_monocle	true
+bspc config gapless_monocle	true
+
+bspc rule -a firefox desktop='^1'
