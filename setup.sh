@@ -77,14 +77,12 @@ else
 	mv .config/* /home/bm/.config
 fi
 
-pacman -S --noconfirm firefox ripgrep netcat alacritty xterm unzip tcpdump wget dialog i3-gaps qbittorrent awesome-terminal-fonts arandr 
-vlc rofi xcursor-simpleandsoft hicolor-icon-theme lxappearance-gtk3 xorg-server thunar discord openvpn feh scrot gparted reflector lightdm 
-lightdm-gtk-greeter python2 cronie pkgfile libpulse noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio libpulse python-pip xdg-utils 
-gvfs gvfs-afc
+pacman -S --noconfirm firefox ripgrep netcat alacritty xterm unzip tcpdump wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr 
+vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm 
+lightdm-gtk-greeter cronie pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
-echo "* * * * * root /usr/bin/pkgfile --update" >> /etc/cron.d/0hourly
 mkdir -p /home/bm/.icons/default && chown -R bm:bm /home/bm/.icons
 echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simple-and-Soft" > /home/bm/.icons/default/index.theme
 chown bm:bm /home/bm/.icons/default/index.theme
@@ -93,12 +91,9 @@ systemctl enable --now cronie
 
 sudo -u bm yay -S --removemake bumblebee-status neovim nerd-fonts-mononoki suru-plus-git
 
-sudo -u bm yay --removemake --nopgpfetch --mflags --skipinteg spotify spotify-adblock tor-browser
+sudo -u bm yay --removemake --nopgpfetch --mflags --skipinteg spotify spotify-adblock tor-browser polybar
 chown root:root spotify.desktop
 mv spotify.desktop /usr/share/applications
 rm /usr/share/applications/spotify-adblock.desktop
 
-pip install dbus-python # needed for bumblebee-status spotify module
-
 sudo kill -9 `pidof pulseaudio` && pulseaudio &
-curl https://blackarch.org/strap.sh | sh
