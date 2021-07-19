@@ -63,7 +63,7 @@ mv .config /home/bm
 
 dir=$(pwd)
 cd /home/bm/.config
-chmod +x bspwm/bspwmrc polybar/launch.sh polybar/mic.sh
+chmod +x bspwm/bspwmrc polybar/launch.sh polybar/mic.sh rofi/launcher.sh
 cd $dir
 
 pacman -S --noconfirm firefox picom ripgrep netcat alacritty unzip tcpdump flameshot xorg-xsetroot dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
