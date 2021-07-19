@@ -72,7 +72,12 @@ chown bm:bm /home/bm/.profile
 rm -rf /home/bm/.config 2>/dev/null
 mv .config /home/bm
 
-pacman -S --noconfirm firefox ripgrep netcat alacritty unzip tcpdump flameshot wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap lightdm-gtk-greeter cronie pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
+dir=$(pwd)
+cd /home/bm/.config
+chmod +x bspwm/bspwmrc polybar/launch.sh polybar/mic.sh
+cd $dir
+
+pacman -S --noconfirm firefox ripgrep netcat alacritty unzip tcpdump flameshot wget dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh flameshoburpburpt gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
 
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
@@ -80,7 +85,6 @@ mkdir -p /home/bm/.icons/default && chown -R bm:bm /home/bm/.icons
 echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simple-and-Soft" > /home/bm/.icons/default/index.theme
 chown bm:bm /home/bm/.icons/default/index.theme
 systemctl enable lightdm
-systemctl enable --now cronie
 
 sudo -u bm yay -S --noconfirm --removemake neovim nerd-fonts-mononoki suru-plus-git polybar
 
