@@ -1,5 +1,5 @@
 RPROMPT='[%*]'
-PROMPT='%{$fg[white]%}%n%{$reset_color%}%{$fg[magenta]%}@%{$reset_color%}%{$fg[white]%}%m%{$reset_color%} %{$fg[white]%}%c%{$reset_color%} '
+PROMPT='%{$fg[white]%}%n%{$reset_color%}%{$fg[red]%}@%{$reset_color%}%{$fg[white]%}%m%{$reset_color%} %{$fg[white]%}%c%{$reset_color%} '
 
 # LS colors, made with https://geoff.greer.fm/lscolors/
 # export LSCOLORS="FxGxCgDxfxBABaAbabFafa"
