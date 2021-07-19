@@ -1,10 +1,10 @@
 #! /bin/sh
 
 #### AUTOSTART ####
-xsetroot -cursor_name left_ptr
 sxhkd &
-feh --bg-scale Downloads/9a9f1f0dfcff961db099320707b31483.jpg
+feh --bg-scale /home/bm/wallpapers/1.jpg
 /home/bm/.config/polybar/launch.sh &
+xsetroot -cursor_name left_ptr
 picom -f -b
 
 #### MONITOR ####
