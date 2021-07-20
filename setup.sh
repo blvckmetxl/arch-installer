@@ -53,7 +53,7 @@ echo -e "wordlist = \"/opt/wordlists/directory-list-2.3-medium.txt\"\nthreads = 
 mkdir /etc/samba
 touch /etc/samba/smb.conf
 
-echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'" >> /etc/environment # fix burpsuite weird font
+echo -e "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'\n_JAVA_AWT_WM_NONREPARENTING=1" >> /etc/environment # fix burpsuite weird font
 echo "setxkbmap br" >> /home/bm/.profile
 chown bm:bm /home/bm/.profile
 
