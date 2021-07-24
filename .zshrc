@@ -101,6 +101,7 @@ export EDITOR='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias v="nvim"
+alias cb="xsel -b"
 alias sv="sudo nvim"
 alias svh="sudo nvim /etc/hosts"
 alias up="sudo python3 -m http.server 80"
