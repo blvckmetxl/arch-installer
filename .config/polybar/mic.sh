@@ -8,7 +8,8 @@ display_volume() {
 	else
 	  volume="${volume//[[:blank:]]/}" 
 	  if [[ "$mute" == *"yes"* ]]; then
-	    echo "[$volume]"
+	    #echo "[$volume]"
+	    echo "%{F#3b3b3b}muted"
 	  elif [[ "$mute" == *"no"* ]]; then
 	    echo "$volume"
 	  else
