@@ -7,6 +7,14 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch Polybar, using default config location ~/.config/polybar/config
-polybar bar &
+
+xrandr -q | rg -w connected | rg VGA1
+if [[ "$(echo $?)" != "0" ]]
+then
+	polybar LVDS1 &
+else
+	polybar LVDS1 &
+	polybar VGA1 &
+fi
 
 echo "Polybar launched..."
