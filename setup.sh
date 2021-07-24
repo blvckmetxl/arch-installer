@@ -74,10 +74,15 @@ sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share
 mkdir -p /home/bm/.icons/default && chown -R bm:bm /home/bm/.icons
 echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simple-and-Soft" > /home/bm/.icons/default/index.theme
 chown bm:bm /home/bm/.icons/default/index.theme
+pkgfile --update
 systemctl enable lightdm
 
-sudo -u bm yay -S --noconfirm --removemake neovim nerd-fonts-mononoki suru-plus-git polybar
+### tools ###
+pacman -S --noconfirm aircrack-ng exploitdb hydra john metasploit nmap wireshark-qt
+yay -S --noconfirm --nopgpfetch --mflags --skipinteg burpsuite feroxbuster rustscan wfuzz 
+###   -   ###
 
+sudo -u bm yay -S --noconfirm --removemake neovim nerd-fonts-mononoki suru-plus-git polybar
 sudo -u bm yay -S --noconfirm --removemake --nopgpfetch --mflags --skipinteg spotify spotify-adblock tor-browser
 chown root:root spotify.desktop
 mv spotify.desktop /usr/share/applications
