@@ -24,24 +24,25 @@ background = #ccffffff
 foreground = #000000
 ;foreground-alt = #555
 primary = #000000
-secondary = #ffffff
+secondary = #ff0000
 alert = #bd2c40
 
-[bar/bar]
+[bar/master]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 27
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 7.0
+radius = 8.0
 fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-;line-size = 1
-line-color = #00000000
+line-size = 1
+line-color = #000000
 ;line-color = #f00
+
 
 border-size = 8
 border-color = #00000000
@@ -57,9 +58,9 @@ module-margin-right = 2
 ;font-2 = siji:pixelsize=10;1
 font-0 = "mononoki Nerd Font:style=Bold:size=9;3"
 
-modules-left = bspwm
-modules-center = xwindow
-modules-right = memory temperature pulseaudio mic date
+;modules-left = bspwm eth
+;modules-center = xwindow
+;modules-right = memory temperature pulseaudio mic date
 ;cpu wlan powermenu
 
 tray-position = none
@@ -113,20 +114,21 @@ label-unmounted-foreground = ${colors.foreground-alt}
 [module/bspwm]
 type = internal/bspwm
 
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
+label-focused = %name%
+;label-focused-background = ${colors.background-alt}
+label-focused-background = #cce1e1e1
 label-focused-underline= ${colors.primary}
 label-focused-padding = 2
 
-label-occupied = %index%
+label-occupied = %name%
 label-occupied-padding = 2
 
-label-urgent = %index%!
+label-urgent = %name%!
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
-label-empty = %index%
-label-empty-foreground = ${colors.foreground-alt}
+label-empty = %name%
+label-empty-foreground = #3b3b3b
 label-empty-padding = 2
 
 ; Separator in between workspaces
@@ -220,7 +222,8 @@ interval = 2
 ;format-prefix = " "
 format-prefix = "RAM: "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+;format-underline = #4bffdc
+format-underline = 
 label = %percentage_used%%
 
 [module/wlan]
@@ -230,8 +233,7 @@ interval = 3.0
 
 format-connected = <label-connected>
 format-connected-underline = #9f78e1
-;label-connected = %essid%
-label-connected = %{A1:nm-applet:}%essid%%{A}
+label-connected = %essid%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -248,13 +250,16 @@ format-disconnected =
 
 [module/eth]
 type = internal/network
-interface = enp5s0
-interval = 3.0
+;interface = enp5s0
+interface = tun0
+interval = 2.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = " "
+padding-left = 20
+
+;format-connected-underline = #55aa55
+;format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+label-connected = tun0: %local_ip%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -267,26 +272,29 @@ type = internal/date
 interval = 5
 
 date =
-date-alt = " %Y-%m-%d"
+date-alt = "%d/%m/%Y"
 
 time = %H:%M
 time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+;format-underline = #0a6cf5
 
 label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
+format-underline = #000000
 format-volume = <label-volume>
 label-volume = VOL: %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
-label-muted-foreground = #666
+;label-muted = 🔇 muted
+label-muted = VOL: %{F#3b3b3b}muted
+;label-muted-foreground = #666
+;label-muted-foreground = #3b3b3b
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -369,18 +377,17 @@ animation-discharging-framerate = 750
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
-warn-temperature = 60
+warn-temperature = 65
 
-format = <ramp><label>
-format-underline = #f50a4d
+format = <label>
+;format-underline = #f50a4d
 format-warn = <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = %temperature-c%
-label-warn = %temperature-c%
+label = TEMP: %temperature-c%
+label-warn = TEMP: %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
-ramp-0 = "TEMP: "
 ;ramp-0 = 
 ;ramp-1 = 
 ;ramp-2 = 
@@ -439,3 +446,21 @@ screenchange-reload = true
 ;margin-bottom = 5
 
 ; vim:ft=dosini
+
+;;; DUAL MONITOR BARS ;;;
+[bar/LVDS1]
+inherit = bar/master
+monitor = LVDS1
+
+modules-left = bspwm
+modules-center = xwindow
+modules-right = memory temperature pulseaudio mic date
+
+[bar/VGA1]
+inherit = bar/master
+monitor = VGA1
+
+modules-left = bspwm
+modules-center = xwindow
+modules-right = eth
+height = 23
