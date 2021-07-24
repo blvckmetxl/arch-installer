@@ -7,17 +7,31 @@ super + Return
 	alacritty
 
 #### my stuff ####
-super + @b
+super + b
 	firefox
 
-super + @d
+super + d
 	/home/bm/.config/rofi/launcher.sh
 
-super + @s
+super + s
 	flameshot full -c
 
-super + shift + @s
+super + shift + s
 	flameshot gui
+
+super + shift + f
+	thunar
+
+## volume keys
+
+XF86AudioRaiseVolume
+    pactl set-sink-volume 0 +5%
+
+XF86AudioLowerVolume
+    pactl set-sink-volume 0 -5%
+
+XF86AudioMute
+    pactl set-sink-mute 0 toggle
 #### ####
 
 # make sxhkd reload its configuration files:
@@ -53,8 +67,10 @@ super + {_,shift + }c
 #
 
 # set the window state
-super + {t,shift + t,s,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+#super + {t,shift + t,s,f}
+#	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + {t,shift + t,f}
+	bspc node -t {tiled,pseudo_tiled,fullscreen}
 
 # set the node flags
 #super + ctrl + {m,x,y,z}
