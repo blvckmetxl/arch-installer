@@ -35,6 +35,8 @@ mv .zshrc /home/bm
 
 mv wallpapers /home/bm
 mkdir /home/bm/vpns
+mv .screenlayout /home/bm
+chmod +x /home/bm/.screenlayout/dualm.sh
 chown bm:bm /home/bm/vpns
 mkdir /opt/wordlists
 
@@ -62,7 +64,7 @@ mv .config /home/bm
 
 dir=$(pwd)
 cd /home/bm/.config
-chmod +x bspwm/bspwmrc polybar/launch.sh polybar/mic.sh rofi/launcher.sh
+chmod +x bspwm/bspwmrc bspwm/mon.sh polybar/launch.sh polybar/mic.sh rofi/launcher.sh
 cd $dir
 
 pacman -S --noconfirm picom firefox ripgrep netcat alacritty unzip tcpdump flameshot pavucontrol xorg-xsetroot dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
