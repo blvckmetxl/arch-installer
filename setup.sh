@@ -69,6 +69,7 @@ cd $dir
 
 pacman -S --noconfirm picom firefox ripgrep netcat alacritty unzip tcpdump flameshot pavucontrol xorg-xsetroot dialog sxhkd bspwm qbittorrent awesome-terminal-fonts arandr vlc rofi xcursor-simpleandsoft lxappearance-gtk3 xorg-server thunar discord openvpn feh gparted reflector lightdm rlwrap lightdm-gtk-greeter pkgfile noto-fonts noto-fonts-cjk noto-fonts-emoji pulseaudio python-pip xdg-utils gvfs gvfs-afc xsel
 
+echo -e "\nopacity-rule = [ "20:class_g = 'Bspwm' && class_i = 'presel_feedback'" ];" >> /etc/xdg/picom.conf
 sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf # fix pulseaudio config
 sed -i 's/\/usr\/bin\/gparted/\/usr\/bin\/sudo \/usr\/bin\/gparted/g' /usr/share/applications/gparted.desktop
 mkdir -p /home/bm/.icons/default && chown -R bm:bm /home/bm/.icons
