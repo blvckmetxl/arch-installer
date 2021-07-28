@@ -1,14 +1,14 @@
 #!/bin/bash
 
-if [[ "$(cat /etc/os-release | grep \"Archcraft\")" ]]
-then
-    	chmod +x archcraft/setup.sh && cd archcraft && ./setup.sh
-	exit
-fi
-
 if [ "$EUID" -ne 0 ]
 then
 	echo "not root"
+	exit
+fi
+
+if [[ "$(cat /etc/os-release | grep \"Archcraft\")" ]]
+then
+    	chmod +x archcraft/setup.sh && cd archcraft && ./setup.sh
 	exit
 fi
 
