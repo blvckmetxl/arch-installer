@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -rf /home/bm/Music
 mv sxhkdrc /home/bm/.config/sxhkd/
 mv config /home/bm/.config/bspwm/polybar/
 mv .zshrc /home/bm/ && chmod +x /home/bm/.zshrc
