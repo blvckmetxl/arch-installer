@@ -4,6 +4,7 @@ if [[ "$(cat /etc/os-release | grep \"Archcraft\")" ]]
 then
     	chmod +x archcraft/setup.sh && cd archcraft && ./setup.sh
     
+    	mkdir /opt/wordlists
     	wget https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
     	gzip -d rockyou.txt.gz
     	mv rockyou.txt /opt/wordlists
