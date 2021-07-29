@@ -7,6 +7,9 @@ mv .zshrc /home/bm/ && chmod +x /home/bm/.zshrc
 mv .fehbg /home/bm/ && chmod +x /home/bm/.fehbg
 mv bspwmrc /home/bm/.config/bspwm/ && chmod +x /home/bm/.config/bspwm/bspwmrc
 
+sed -i "s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
+sed -i "s/^ParallelDownloads.*/ParallelDownloads = 5/g" /etc/pacman.conf
+
 mkdir /opt/wordlists
 wget https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
 gzip -d rockyou.txt.gz
@@ -17,7 +20,7 @@ mkdir /etc/feroxbuster
 echo -e "wordlist = \"/opt/wordlists/directory-list-2.3-medium.txt\"\nthreads = 10\nsave_state = false" > /etc/feroxbuster/ferox-config.toml
 
 pacman -Syyyu --noconfirm
-pacman -S --noconfirm firefox discord ripgrep tcpdump python-pip qbittorrent xcursor-simpleandsoft pkgfile xorg-xsetroot
+pacman -S --noconfirm firefox discord ripgrep tcpdump python-pip qbittorrent xcursor-simpleandsoft pkgfile xorg-xsetroot noto-fonts-cjk
 ### tools ###
 pacman -S --noconfirm aircrack-ng exploitdb hydra john metasploit wireshark-qt
 sudo -u bm yay -S --noconfirm --mflags burpsuite feroxbuster rustscan wfuzz 
