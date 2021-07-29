@@ -33,5 +33,8 @@ echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simp
 chown -R bm:bm /home/bm/.icons
 sed -i 's/Inherits.*/Inherits=Simple-and-Soft/g' /usr/share/icons/default/index.theme
 echo "gtk-cursor-theme-name=Simple-and-Soft" >> /usr/share/gtk-3.0/settings.ini
+
+mv ../spotify.desktop /usr/share/applications
+rm /usr/share/applications/spotify-adblock.desktop
     
 echo -e "JAVA_AWT_WM_NONREPARENTING=1" >> /etc/environment
