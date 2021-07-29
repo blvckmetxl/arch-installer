@@ -20,12 +20,14 @@ pacman -Syyyu --noconfirm
 pacman -S --noconfirm firefox discord ripgrep tcpdump python-pip qbittorrent xcursor-simpleandsoft pkgfile xorg-xsetroot
 ### tools ###
 pacman -S --noconfirm aircrack-ng exploitdb hydra john metasploit wireshark-qt
-yay -S --noconfirm --mflags burpsuite feroxbuster rustscan wfuzz 
+sudo -u bm yay -S --noconfirm --mflags burpsuite feroxbuster rustscan wfuzz 
 ###   -   ###
 sudo -u bm yay -S --noconfirm --removemake neovim spotify spotify-adblock tor-browser teams-for-linux
 pkgfile --update
-	
+
+mkdir -p /home/bm/.icons/default 
 echo -e "[Icon Theme]\nName=Default\nComment=Default Cursor Theme\nInherits=Simple-and-Soft" > /home/bm/.icons/default/index.theme
+chown -R bm:bm /home/bm/.icons
 sed -i 's/Inherits.*/Inherits=Simple-and-Soft/g' /usr/share/icons/default/index.theme
 echo "gtk-cursor-theme-name=Simple-and-Soft" >> /usr/share/gtk-3.0/settings.ini
     
