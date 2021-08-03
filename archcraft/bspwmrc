@@ -90,7 +90,7 @@ bspc rule -a "teams-for-linux" desktop='^7'
 ## Autostart -------------------------------#
 
 # Kill if already running
-killall -9 sxhkd xsettingsd dunst xfce4-power-manager
+killall -9 sxhkd xsettingsd dunst #xfce4-power-manager
 
 # Lauch notification daemon
 dunst \
@@ -115,7 +115,7 @@ ksuperkey -e 'Super_L=Alt_L|F1' &
 ksuperkey -e 'Super_R=Alt_L|F1' &
 
 # Enable power management
-xfce4-power-manager &
+# xfce4-power-manager &
 
 # Fix cursor
 xsetroot -cursor_name left_ptr
